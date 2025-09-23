@@ -23,5 +23,5 @@ func Initialize() {
 
 	// Inicie o servidor na porta 8080 (padrão)
 	// O servidor escutará em 0.0.0.0:8080 (localhost:8080 no Windows)
-	router.Run()
+	router.Run(":8080")
 }
