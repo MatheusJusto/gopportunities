@@ -57,6 +57,6 @@ func (l *Logger) Warningf(format string, v ...interface{}) {
 	l.warning.Printf(format, v...)
 }
 
-func (l *Logger) Errf(format string, v ...interface{}) {
+func (l *Logger) Errorf(format string, v ...interface{}) {
 	l.err.Printf(format, v...)
 }
