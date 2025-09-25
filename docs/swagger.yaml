@@ -1,4 +1,223 @@
+definitions:
+  handler.CreateOpeningRequest:
+    properties:
+      company:
+        type: string
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: number
+    type: object
+  handler.OpeningSwagger:
+    properties:
+      company:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      localization:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
+    type: object
+  handler.UpdateOpeningRequest:
+    properties:
+      company:
+        type: string
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: number
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /openings:
+    delete:
+      consumes:
+      - application/json
+      description: Deleta uma vaga de trabalho pelo ID
+      parameters:
+      - description: Opening ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Vaga deletada com sucesso
+          schema:
+            type: string
+        "400":
+          description: ID não informado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Opening não encontrada
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Erro interno no servidor
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete Opening
+      tags:
+      - Openings
+    get:
+      consumes:
+      - application/json
+      description: Lista todas as vagas de trabalho
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Lista de vagas
+          schema:
+            items:
+              $ref: '#/definitions/handler.OpeningSwagger'
+            type: array
+        "404":
+          description: Nenhuma vaga encontrada
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: List Openings
+      tags:
+      - Openings
+    post:
+      consumes:
+      - application/json
+      description: Cria uma nova vaga de trabalho
+      parameters:
+      - description: Opening Data
+        in: body
+        name: opening
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateOpeningRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Opening criada com sucesso
+          schema:
+            $ref: '#/definitions/handler.OpeningSwagger'
+        "400":
+          description: Erro de validação
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Erro interno no servidor
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create Opening
+      tags:
+      - Openings
+    put:
+      consumes:
+      - application/json
+      description: Atualiza os dados de uma vaga de trabalho pelo ID
+      parameters:
+      - description: Opening ID
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Dados da vaga para atualizar
+        in: body
+        name: opening
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateOpeningRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Vaga atualizada com sucesso
+          schema:
+            $ref: '#/definitions/handler.OpeningSwagger'
+        "400":
+          description: Erro de validação ou ID não informado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Opening não encontrada
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Erro interno no servidor
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update Opening
+      tags:
+      - Openings
+  /openings/opening:
+    get:
+      consumes:
+      - application/json
+      description: Busca uma vaga de trabalho pelo ID
+      parameters:
+      - description: Opening ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Opening encontrada
+          schema:
+            $ref: '#/definitions/handler.OpeningSwagger'
+        "400":
+          description: ID não informado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Opening não encontrada
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Opening by ID
+      tags:
+      - Openings
 swagger: "2.0"
